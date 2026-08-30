@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Statistical Poster — Bug Triage Dataset</title>
+<style>
+  @page { size: A3 portrait; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 297mm; height: 420mm; overflow: hidden; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #15202b; background: #fff;
+    padding: 6mm 7mm 5mm 7mm;
+    display: flex; flex-direction: column;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ---------------------------------------------------------- header --- */
+  header {
+    border-bottom: 1mm solid #12395c; padding-bottom: 1.5mm; margin-bottom: 2mm;
+  }
+  .eyebrow { font-size: 6.2pt; letter-spacing: .13em; text-transform: uppercase;
+             color: #45688a; font-weight: 700; }
+  h1 { font-size: 16.8pt; line-height: 1.04; color: #12395c; letter-spacing: -.01em; }
+  h1 .sub { display: block; font-size: 9pt; font-weight: 600; color: #37536e;
+            margin-top: .8mm; letter-spacing: 0; }
+  .meta { display: flex; gap: 3.4mm; margin-top: 1.1mm; font-size: 6pt;
+          color: #4c6076; flex-wrap: wrap; }
+  .meta b { color: #12395c; }
+
+  /* ----------------------------------------------------------- facts --- */
+  .facts {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    border: .35mm solid #c2d2e0; border-radius: 1mm; overflow: hidden;
+    margin-bottom: 2.2mm; background: #f4f8fb;
+  }
+  .facts div { padding: 1.1mm 1.5mm; border-right: .3mm solid #dbe6ef; }
+  .facts div:last-child { border-right: 0; }
+  .facts .k { font-size: 5pt; text-transform: uppercase; letter-spacing: .06em;
+              color: #5b7086; font-weight: 700; }
+  .facts .v { font-size: 7.8pt; font-weight: 700; color: #12395c; line-height: 1.12; }
+  .facts .s { font-size: 4.9pt; color: #6b7f92; }
+
+  /* ------------------------------------------------------------ grid --- */
+  .grid {
+    flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 0.9fr; gap: 2.6mm;
+  }
+  /* min-height:0 lets grid items shrink to their track instead of forcing
+     the grid taller than the page and spilling onto a second sheet */
+  .block, .panel { min-height: 0; }
+  .block {
+    border: .35mm solid #c2d2e0; border-radius: 1mm; padding: 1.5mm;
+    display: flex; flex-direction: column; background: #fff; overflow: hidden;
+  }
+  /* observations are handwritten on the print, so no box is reserved and the
+     freed height goes to the figures */
+  .block img { width: 100%; height: 46mm; object-fit: contain; display: block; }
+  /* Figure 6 spans both columns on the final row */
+  .block.wide { grid-column: 1 / -1; }
+  .block.wide img { height: 41mm; }
+
+  .tbl-title { font-size: 6.5pt; font-weight: 700; color: #12395c;
+               margin: 1.1mm 0 .7mm 0; letter-spacing: .01em; }
+  table { width: 100%; border-collapse: collapse; font-size: 5.7pt;
+          font-variant-numeric: tabular-nums; }
+  thead th { background: #12395c; color: #fff; font-weight: 700; text-align: left;
+             padding: .55mm 1mm; font-size: 5.5pt; letter-spacing: .02em; }
+  tbody td { padding: .45mm 1mm; border-bottom: .2mm solid #e6edf3; }
+  tbody tr:nth-child(even) td { background: #f6f9fc; }
+  tbody td:nth-child(even) { text-align: right; font-weight: 600; color: #12395c; }
+  /* 5-column tables (T2, T5) align numbers right only in the numeric columns */
+  table.wide tbody td { text-align: left; font-weight: 400; color: #15202b; }
+  table.wide tbody td:not(:nth-child(2)):not(:nth-child(1)) { text-align: right; }
+  /* 3-column tables: label on the left, both numeric columns right-aligned */
+  table.trio tbody td { text-align: right; font-weight: 600; color: #12395c; }
+  table.trio tbody td:first-child { text-align: left; font-weight: 400; color: #15202b; }
+  .note { font-size: 5.3pt; color: #5b7086; font-style: italic;
+          margin-top: .8mm; line-height: 1.29; }
+
+  .obs { margin-top: auto; border: .35mm dashed #9bb0c4; border-radius: 1mm;
+         padding: .8mm 1.5mm .5mm 1.5mm; background: #fcfdfe; flex-shrink: 0; }
+  .obs-lbl { font-size: 5.3pt; font-weight: 700; letter-spacing: .08em;
+             text-transform: uppercase; color: #45688a; }
+  .rule { border-bottom: .22mm solid #ccd8e3; height: 3.9mm; }
+  .rule:last-child { border-bottom: 0; }
+
+  /* ----------------------------------------------------------- panel --- */
+  .panel { border: .35mm solid #c2d2e0; border-radius: 1mm; padding: 1.7mm 2mm;
+           background: #f9fbfd; overflow: hidden; }
+  .panel h2 { font-size: 7.2pt; color: #12395c; margin-bottom: .9mm;
+              border-bottom: .3mm solid #c2d2e0; padding-bottom: .6mm;
+              column-span: all; }
+  /* two internal text columns so the method notes fit the half-width cell */
+  .panel .body { column-count: 2; column-gap: 3mm; }
+  .panel h3 { font-size: 5.2pt; text-transform: uppercase; letter-spacing: .07em;
+              color: #45688a; margin: .9mm 0 .4mm 0; break-after: avoid; }
+  .panel h3:first-child { margin-top: 0; }
+  .panel p, .panel li { font-size: 4.9pt; line-height: 1.3; color: #2b3d4f; }
+  .panel li { margin-bottom: .1mm; }
+  .panel ul { padding-left: 2.4mm; }
+  .panel code { font-family: Consolas, monospace; font-size: 4.6pt; color: #12395c; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: .1mm 1.6mm;
+        font-size: 4.9pt; }
+  .kv span:nth-child(odd) { color: #5b7086; }
+  .kv span:nth-child(even) { font-weight: 600; color: #12395c;
+                             font-variant-numeric: tabular-nums; }
+
+  footer { margin-top: 2.4mm; border-top: .5mm solid #12395c; padding-top: 1.2mm;
+           font-size: 5.2pt; color: #5b7086; display: flex;
+           justify-content: space-between; gap: 4mm; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Exploratory Data Analysis · Statistical Poster · Activity 1</div>
+  <h1>Statistical Characterisation of a Large-Scale Software Bug Repository
+    <span class="sub">Exploratory analysis of {{unique}} Mozilla Bugzilla defect reports underpinning an
+      ML-based bug triage and resolution recommendation system</span>
+  </h1>
+  <div class="meta">
+    <span><b>Dataset:</b> BugsRepo (Zenodo 15004067, CC-BY 4.0)</span>
+    <span><b>Source:</b> bugzilla.mozilla.org REST API</span>
+    <span><b>Observation window:</b> {{date_min}} → {{date_max}} ({{span}} days)</span>
+    <span><b>Unit of analysis:</b> one bug report</span>
+  </div>
+</header>
+
+<div class="facts">
+  <div><div class="k">Records analysed</div><div class="v">{{unique}}</div>
+       <div class="s">from {{raw_rows}} raw rows</div></div>
+  <div><div class="k">Duplicate rows removed</div><div class="v">{{dropped}}</div>
+       <div class="s">{{dropped_pct}}% of raw file</div></div>
+  <div><div class="k">Products / Components</div><div class="v">{{products}} / {{components}}</div>
+       <div class="s">categorical label space</div></div>
+  <div><div class="k">Severity labelled</div><div class="v">{{sev_labelled}}</div>
+       <div class="s">{{sev_pct}}% on the S1–S4 scale</div></div>
+  <div><div class="k">With resolution time</div><div class="v">{{resolved_n}}</div>
+       <div class="s">creation → last resolved</div></div>
+  <div><div class="k">Marked duplicate</div><div class="v">{{dupeof}}</div>
+       <div class="s">non-null <code>dupe_of</code></div></div>
+</div>
+
+<div class="grid">
+  {{BLOCK1}}
+  {{BLOCK2}}
+  {{BLOCK3}}
+  {{BLOCK4}}
+  {{BLOCK5}}
+
+  <section class="panel">
+    <h2>Dataset, Variables &amp; Method</h2>
+    <div class="body">
+
+    <h3>Provenance</h3>
+    <div class="kv">
+      <span>Source file</span><span>Bug_meta_data.csv</span>
+      <span>File size</span><span>350,195,270 bytes</span>
+      <span>SHA-256 (first 24)</span><span><code>{{sha}}…</code></span>
+      <span>Columns in file</span><span>299 (20 retained)</span>
+      <span>Licence</span><span>CC-BY 4.0</span>
+    </div>
+
+    <h3>Composition</h3>
+    <div class="kv">
+      <span>Type · defect</span><span>{{defect}}</span>
+      <span>Type · task</span><span>{{task}}</span>
+      <span>Type · enhancement</span><span>{{enh}}</span>
+      <span>Resolution · FIXED</span><span>{{fixed}}</span>
+      <span>Resolution · DUPLICATE</span><span>{{dupe}}</span>
+      <span>Resolution · INCOMPLETE</span><span>{{incomplete}}</span>
+      <span>Resolution · INVALID</span><span>{{invalid}}</span>
+      <span>Still unresolved</span><span>{{unresolved}}</span>
+    </div>
+
+    <h3>Severity distribution</h3>
+    <div class="kv">
+      <span>S1 (most severe)</span><span>{{s1}}</span>
+      <span>S2</span><span>{{s2}}</span>
+      <span>S3</span><span>{{s3}}</span>
+      <span>S4 (least severe)</span><span>{{s4}}</span>
+      <span>“--” unset</span><span>{{unset}}</span>
+    </div>
+
+    <h3>Statistical methods</h3>
+    <ul>
+      <li>Central tendency &amp; dispersion: mean, median, mode, variance, SD, IQR.</li>
+      <li>Position: quartiles Q1–Q3; percentiles P5, P90, P95, P99.</li>
+      <li>Shape: Fisher skewness, excess kurtosis. Outliers: Tukey 1.5 × IQR fence.</li>
+      <li>Association: Spearman ρ — preferred to Pearson because every variable is
+          heavily right-skewed and the relations are monotonic, not linear.</li>
+      <li>Group comparison: Kruskal–Wallis H (non-parametric one-way ANOVA).</li>
+      <li>Normality: Shapiro–Wilk W on a random sub-sample (n = 4,000).</li>
+      <li>Logarithmic axes where ranges span several orders of magnitude.</li>
+    </ul>
+
+    <h3>Cleaning decisions</h3>
+    <ul>
+      <li>De-duplicated on bug ID, keeping the first occurrence.</li>
+      <li>Negative durations (resolved before created) set to missing.</li>
+      <li>Resolutions under 15 min excluded from Figs 2–3 as automated closures.</li>
+      <li>Legacy severity words excluded (&lt; 0.6% of records; the repository had
+          migrated to the S1–S4 scale before this window).</li>
+    </ul>
+
+    <h3>Reference</h3>
+    <p><i>BugsRepo: A Comprehensive Curated Dataset of Bug Reports, Comments and
+       Contributors Information from Bugzilla.</i> EASE 2025, Data &amp; Tool Track.
+       arXiv:2504.18806 · doi.org/10.5281/zenodo.15004067</p>
+    </div>
+  </section>
+
+  {{BLOCK6}}
+</div>
+
+<footer>
+  <span><b>Tools:</b> Python 3.14 · pandas 3.0.3 · NumPy 2.5.1 · SciPy 1.18.0 ·
+        Matplotlib 3.11.0 · seaborn 0.13.2. All figures computed from the raw dataset;
+        analysis fully reproducible from <code>build_a3_poster.py</code>.</span>
+  <span>Random seed 42 · Prepared for Project Activity 1</span>
+</footer>
+
+</body>
+</html>

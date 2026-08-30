@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Observations A3 — Statistical Poster</title>
+<style>
+  @page { size: A3 portrait; margin: 10mm 11mm 8mm 11mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+         color: #15202b; font-size: 8.5pt; line-height: 1.31;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  header { border-bottom: .8mm solid #12395c; padding-bottom: 1.8mm; margin-bottom: 2.4mm; }
+  .eyebrow { font-size: 7.2pt; letter-spacing: .15em; text-transform: uppercase;
+             color: #45688a; font-weight: 700; }
+  h1 { font-size: 17pt; color: #12395c; line-height: 1.06; margin-top: .9mm; }
+  .lede { font-size: 8.3pt; color: #48607a; margin-top: 1.4mm; line-height: 1.34; }
+
+  .howto { background: #f4f8fb; border: .3mm solid #c2d2e0; border-left: 1.2mm solid #12395c;
+           border-radius: 1mm; padding: 2mm 2.6mm; margin-bottom: 2.8mm; font-size: 8.1pt;
+           color: #2b3d4f; line-height: 1.33; }
+  .howto b { color: #12395c; }
+
+  .cols { column-count: 2; column-gap: 6.5mm; }
+
+  .obs, .gloss {
+    border: .3mm solid #c9d7e3; border-radius: 1.4mm; padding: 2.3mm 2.7mm;
+    margin-bottom: 2.8mm; break-inside: avoid; page-break-inside: avoid;
+  }
+  .obs h2 { font-size: 10pt; color: #12395c; margin-bottom: .3mm; line-height: 1.14; }
+  .obs .fig { font-size: 7pt; text-transform: uppercase; letter-spacing: .1em;
+              color: #7a91a6; font-weight: 700; }
+  .lbl { display: inline-block; font-size: 6.8pt; font-weight: 700; letter-spacing: .08em;
+         text-transform: uppercase; color: #fff; background: #45688a;
+         padding: .35mm 1.5mm; border-radius: .9mm; margin: 1.8mm 0 .8mm 0; }
+  .lbl.short { background: #7d9bb2; }
+  .obs p { text-align: justify; }
+  b.num { color: #12395c; font-variant-numeric: tabular-nums; }
+
+  .keys { margin-top: 1.8mm; padding-top: 1.3mm; border-top: .25mm dashed #c9d7e3;
+          font-size: 7.4pt; color: #5b7086; line-height: 1.32; }
+  .keys b { color: #12395c; font-variant-numeric: tabular-nums; }
+
+  .gloss { background: #fbfcfe; border-color: #b9cbdb; }
+  .gloss h2 { font-size: 10pt; color: #12395c; margin-bottom: 1.4mm;
+              border-bottom: .3mm solid #c9d7e3; padding-bottom: 1mm; }
+  .gloss dl { font-size: 8pt; line-height: 1.31; }
+  .gloss dt { font-weight: 700; color: #12395c; margin-top: 1.3mm; }
+  .gloss dd { color: #2b3d4f; }
+  .gloss .ex { color: #5b7086; font-style: italic; }
+
+  footer { margin-top: 1.8mm; padding-top: 1.3mm; border-top: .5mm solid #12395c;
+           font-size: 7pt; color: #5b7086; line-height: 1.3; }
+  code { font-family: Consolas, monospace; font-size: 6.9pt; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Statistical Poster · Activity 1 · Reference sheet — not for display</div>
+  <h1>Observations &amp; Interpretation of Figures 1–6</h1>
+  <div class="lede">Companion to <i>Statistical Characterisation of a Large-Scale Software Bug
+    Repository</i>. Every value below is computed from 196,633 unique Mozilla Bugzilla bug
+    reports (BugsRepo, Zenodo 15004067, CC-BY 4.0), observation window 2021-01-27 to
+    2024-11-15.</div>
+</header>
+
+<div class="howto">
+  <b>How to use this sheet.</b> Each figure has a <b>full</b> version (~70 words) and a
+  <b>condensed</b> version (~35 words) for when the observation box is tight or your handwriting
+  is large. Put the text into your own words before writing it on the poster — you will be asked
+  about it at the poster session, and phrasing you chose yourself is phrasing you can defend.
+  Every numerical value matches the tables printed on the A3 poster. The glossary at the end
+  explains each statistical term in plain language.
+</div>
+
+<div class="cols">
+
+<section class="obs">
+  <div class="fig">Figure 1 · Table 1</div>
+  <h2>Distribution of Comments per Bug Report</h2>
+  <span class="lbl">Full</span>
+  <p>The distribution is severely right-skewed (skewness <b class="num">7.04</b>, kurtosis
+  <b class="num">90.86</b>). The mean of <b class="num">7.33</b> exceeds the median of
+  <b class="num">5</b>, confirming that the long tail pulls the average upward, so the median is
+  the more reliable measure of a typical bug. Half of all bugs are resolved with between
+  <b class="num">3</b> and <b class="num">8</b> comments (IQR = <b class="num">5</b>), yet
+  <b class="num">8.74%</b> of reports exceed the Tukey upper fence of <b class="num">15.5</b>,
+  and one bug attracted <b class="num">429</b> comments. Discussion effort is therefore highly
+  concentrated: most bugs are settled quickly, while a small minority consumes a
+  disproportionate share of developer attention.</p>
+  <span class="lbl short">Condensed</span>
+  <p>Strongly right-skewed (skewness <b class="num">7.04</b>): mean <b class="num">7.33</b>
+  exceeds median <b class="num">5</b>, so the median better represents a typical bug. Half need
+  <b class="num">3–8</b> comments, but <b class="num">8.74%</b> are outliers and one reached
+  <b class="num">429</b> — effort is concentrated in a small minority.</p>
+  <div class="keys">n = <b>196,633</b> · mean <b>7.33</b> · median <b>5</b> · mode <b>4</b> ·
+  SD <b>10.49</b> · Q1 <b>3</b> · Q3 <b>8</b> · IQR <b>5</b> · P99 <b>52</b> · max <b>429</b> ·
+  skewness <b>7.04</b> · kurtosis <b>90.86</b></div>
+</section>
+
+<section class="obs">
+  <div class="fig">Figure 2 · Table 2</div>
+  <h2>Bug Resolution Time by Severity Level</h2>
+  <span class="lbl">Full</span>
+  <p>Median resolution time rises monotonically as severity decreases —
+  <b class="num">1.21</b> days for S1, <b class="num">13.54</b> for S2, <b class="num">25.28</b>
+  for S3 and <b class="num">39.25</b> for S4 — so the most severe bugs are resolved roughly
+  <b class="num">32×</b> faster than the least severe. A Kruskal–Wallis test
+  (H = <b class="num">2,765.7</b>, df = 3, p &lt; 0.001) confirms the four medians are not all
+  equal. The interquartile range also widens sharply, from <b class="num">6.77</b> days for S1 to
+  <b class="num">207.54</b> for S4, showing that severe bugs are handled both faster and far more
+  predictably, whereas low-severity bugs may be fixed within a week or linger for years.</p>
+  <span class="lbl short">Condensed</span>
+  <p>Median resolution time rises steadily from <b class="num">1.21</b> days (S1) to
+  <b class="num">39.25</b> days (S4), a <b class="num">32×</b> gap confirmed by Kruskal–Wallis
+  (p &lt; 0.001). The widening IQR (<b class="num">6.77</b> → <b class="num">207.54</b>) shows
+  severe bugs are also handled far more predictably.</p>
+  <div class="keys">medians <b>1.21 / 13.54 / 25.28 / 39.25</b> days ·
+  IQR <b>6.77 / 52.35 / 138.04 / 207.54</b> · n = <b>428 / 4,876 / 19,056 / 33,153</b> ·
+  Kruskal–Wallis H = <b>2,765.7</b>, df = <b>3</b>, p <b>&lt; 0.001</b></div>
+</section>
+
+<section class="obs">
+  <div class="fig">Figure 3 · Table 3</div>
+  <h2>Discussion Volume vs. Time to Resolution</h2>
+  <span class="lbl">Full</span>
+  <p>The two variables are positively associated (Spearman ρ = <b class="num">0.3175</b>,
+  p &lt; 0.001), and the log–log slope of <b class="num">0.909</b> indicates a near-proportional
+  relationship. However, the coefficient of determination is only r² = <b class="num">0.1254</b>,
+  meaning the model explains just <b class="num">12.5%</b> of the variance in resolution time.
+  With n = <b class="num">6,000</b> the correlation is highly significant yet weak, which
+  illustrates that statistical significance must not be mistaken for predictive strength. Comment
+  count alone is therefore a poor predictor of how long a bug will take to close.</p>
+  <span class="lbl short">Condensed</span>
+  <p>Positive but weak association (ρ = <b class="num">0.3175</b>, p &lt; 0.001); the log–log fit
+  explains only <b class="num">12.5%</b> of variance. Highly significant yet weak — significance
+  is not predictive strength, and comment count alone cannot predict resolution time.</p>
+  <div class="keys">n = <b>6,000</b> · Spearman ρ <b>0.3175</b> · p <b>&lt; 0.001</b> ·
+  OLS slope <b>0.9085</b> · intercept <b>0.7172</b> · Pearson r <b>0.3542</b> ·
+  r² <b>0.1254</b></div>
+</section>
+
+<section class="obs">
+  <div class="fig">Figure 4 · Table 4</div>
+  <h2>Distribution of Bug Report Title Length</h2>
+  <span class="lbl">Full</span>
+  <p>Title length is far more regular than the other variables examined: the mean of
+  <b class="num">9.69</b> words and median of <b class="num">9</b> lie close together, and
+  <b class="num">50%</b> of all titles fall between <b class="num">6</b> and <b class="num">12</b>
+  words. The distribution remains mildly right-skewed (<b class="num">1.35</b>) with excess
+  kurtosis <b class="num">3.19</b>, and Shapiro–Wilk rejects normality
+  (W = <b class="num">0.9057</b>, p &lt; 0.001) — though with n = <b class="num">4,000</b> even
+  slight departures are detected, so W ≈ <b class="num">0.91</b> indicates a moderate rather than
+  extreme deviation. This consistency suggests reporters follow an implicit convention when
+  summarising a defect.</p>
+  <span class="lbl short">Condensed</span>
+  <p>Mean <b class="num">9.69</b> and median <b class="num">9</b> words are close, with
+  <b class="num">50%</b> of titles between <b class="num">6</b> and <b class="num">12</b>.
+  Shapiro–Wilk rejects normality (W = <b class="num">0.9057</b>), but W ≈ 0.91 signals only
+  moderate deviation — reporters appear to follow an implicit convention.</p>
+  <div class="keys">n = <b>196,633</b> · mean <b>9.69</b> · median <b>9</b> · SD <b>4.87</b> ·
+  Q1 <b>6</b> · Q3 <b>12</b> · P90 <b>16</b> · P99 <b>26</b> · max <b>57</b> ·
+  skewness <b>1.35</b> · kurtosis <b>3.19</b> · Shapiro–Wilk W <b>0.9057</b> (n = 4,000)</div>
+</section>
+
+<section class="obs">
+  <div class="fig">Figure 5 · Table 5</div>
+  <h2>Correlation Between Bug Report Attributes</h2>
+  <span class="lbl">Full</span>
+  <p>All pairwise associations are weak to moderate; none exceeds ρ = <b class="num">0.40</b>.
+  The strongest — CC-list size with comment count (<b class="num">+0.400</b>) and resolution time
+  with comment count (<b class="num">+0.365</b>) — plausibly share an underlying cause: bugs that
+  draw more people also draw more discussion and take longer to close. Title length is
+  essentially uncorrelated with everything (|ρ| ≤ <b class="num">0.08</b>), so report length
+  carries no signal about a bug's complexity or lifetime. The absence of any strong correlation
+  indicates that no single metadata field can substitute for the report text itself.</p>
+  <span class="lbl short">Condensed</span>
+  <p>No association exceeds ρ = <b class="num">0.40</b>. The strongest involve comment count
+  (CC size <b class="num">+0.400</b>, resolution time <b class="num">+0.365</b>), likely sharing
+  a common cause. Title length correlates with nothing (|ρ| ≤ <b class="num">0.08</b>), so no
+  metadata field substitutes for the report text.</p>
+  <div class="keys">CC size ~ comments <b>+0.400</b> · resolution time ~ comments <b>+0.365</b> ·
+  keywords ~ comments <b>+0.214</b> · keywords ~ resolution time <b>+0.212</b> ·
+  title length ~ all others <b>|ρ| ≤ 0.08</b> · method: Spearman rank correlation</div>
+</section>
+
+<section class="obs">
+  <div class="fig">Figure 6 · Table 6</div>
+  <h2>Product and Component Concentration</h2>
+  <span class="lbl">Full</span>
+  <p>Bug reports are distributed very unevenly across the project. A single product,
+  <b class="num">Core</b>, accounts for <b class="num">41.2%</b> of all reports, and just
+  <b class="num">8</b> of the <b class="num">85</b> products cover 80% of them. The component
+  level is far more fragmented: the largest component, <b class="num">General</b>, holds only
+  <b class="num">11.1%</b>, the top five reach just <b class="num">22.4%</b> (against
+  <b class="num">71.0%</b> for the top five products), and <b class="num">128</b> of the
+  <b class="num">725</b> components are needed to reach 80%. With a median component holding
+  only <b class="num">46</b> reports, this long tail is why automatic component assignment is a
+  substantially harder classification problem than product assignment.</p>
+  <span class="lbl short">Condensed</span>
+  <p>Reports are highly concentrated by product — <b class="num">Core</b> alone is
+  <b class="num">41.2%</b>, and <b class="num">8</b> of <b class="num">85</b> products cover 80%.
+  Components are far more fragmented: <b class="num">128</b> of <b class="num">725</b> are needed
+  for 80%, with a median of only <b class="num">46</b> reports each.</p>
+  <div class="keys">products <b>85</b> · components <b>725</b> · Core <b>81,023 (41.2%)</b> ·
+  General <b>21,866 (11.1%)</b> · top-5 share <b>71.0%</b> (product) vs <b>22.4%</b> (component) ·
+  categories for 80%: <b>8</b> vs <b>128</b> · median size <b>127</b> vs <b>46</b></div>
+</section>
+
+<section class="gloss">
+  <h2>Plain-language glossary — for answering questions</h2>
+  <dl>
+    <dt>Mean vs. Median</dt>
+    <dd>Mean is the average; median is the middle value. <span class="ex">If four people earn
+      ₹20k and one earns ₹10 lakh, the mean says ₹2.16 lakh but the median says ₹20k. The median
+      describes a typical person better.</span></dd>
+
+    <dt>Skewness</dt>
+    <dd>Whether the tail stretches right or left. Positive = a few very large values.
+      <span class="ex">Most bugs get 5 comments; one got 429. That long right tail is skewness
+      7.04.</span></dd>
+
+    <dt>Kurtosis</dt>
+    <dd>How extreme the outliers are. High kurtosis = rare but enormous values.</dd>
+
+    <dt>Quartiles &amp; IQR</dt>
+    <dd>Sort the data and cut it into four equal parts. Q1 = 25% mark, Q3 = 75% mark; IQR = Q3 − Q1
+      = the range of the middle half. <span class="ex">Q1 = 3, Q3 = 8 means half of all bugs sit
+      between 3 and 8 comments.</span></dd>
+
+    <dt>Percentile</dt>
+    <dd>P90 = the value 90% of the data falls below. <span class="ex">P99 = 52 comments means 99%
+      of bugs got fewer than 52.</span></dd>
+
+    <dt>Box plot</dt>
+    <dd>The box is Q1→Q3, the line inside is the median, the whiskers reach the normal range, and
+      the dots beyond are outliers. A tall box means the group is unpredictable.</dd>
+
+    <dt>Outlier (Tukey's rule)</dt>
+    <dd>Anything above Q3 + 1.5 × IQR counts as unusually large.
+      <span class="ex">Here that is 15.5 comments — 8.74% of bugs exceed it.</span></dd>
+
+    <dt>Correlation (Spearman ρ)</dt>
+    <dd>Do two things rise together? +1 = perfectly together, 0 = unrelated, −1 = opposite.
+      We use Spearman (rank-based) instead of Pearson because our data is very lopsided.
+      <span class="ex">Taller people are usually heavier — a positive correlation, but not a
+      perfect one.</span></dd>
+
+    <dt>r² (coefficient of determination)</dt>
+    <dd>How much of the variation one variable explains in the other.
+      <span class="ex">r² = 0.125 means comment count explains 12.5% of why bugs take different
+      times — the other 87.5% is something else.</span></dd>
+
+    <dt>p-value &amp; significance</dt>
+    <dd>The chance the pattern is a fluke. p &lt; 0.001 = almost certainly real.
+      <span class="ex">Careful: "real" is not "strong". With 6,000 data points even a faint
+      pattern is detectable — which is exactly the point Figure 3 makes.</span></dd>
+
+    <dt>Kruskal–Wallis test</dt>
+    <dd>Checks whether several groups have the same middle value.
+      <span class="ex">Do S1, S2, S3 and S4 bugs really take different times, or is it chance?
+      Answer: really different.</span></dd>
+
+    <dt>Shapiro–Wilk test</dt>
+    <dd>Checks whether data follows the bell curve. W near 1 = bell-shaped.
+      <span class="ex">Our W = 0.91 — close to a bell curve, but not exactly one.</span></dd>
+
+    <dt>Log scale</dt>
+    <dd>Each step multiplies by 10 instead of adding. Used when values range from minutes to
+      years, so small and huge values both stay visible on one axis.</dd>
+
+    <dt>KDE (kernel density estimate)</dt>
+    <dd>A smoothed version of the histogram — the same shape drawn as a curve instead of bars.</dd>
+  </dl>
+</section>
+
+</div>
+
+<footer>
+  All values computed from <code>Bug_meta_data.csv</code> (SHA-256 17457b6c451e8462…),
+  reproducible via <code>build_a3_poster.py</code>, random seed 42. Spearman ρ is used throughout
+  because every variable is heavily right-skewed and the relationships are monotonic rather than
+  linear.
+</footer>
+
+</body>
+</html>

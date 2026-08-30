@@ -1,0 +1,25 @@
+# ---- Data: never commit. Download from Zenodo record 15004067 instead ----
+data/
+*.csv
+*.parquet
+*.npy
+*.pkl
+*.joblib
+
+# ---- Secrets ----
+.env
+*.key
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# ---- OS / editor ----
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

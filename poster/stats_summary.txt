@@ -1,0 +1,129 @@
+======================================================================
+LOADING
+======================================================================
+raw rows                : 225,196
+after de-duplicating id : 196,633
+rows with S1-S4 severity: 79,842 (40.6%)
+resolution_days available: 153,748
+
+======================================================================
+DESCRIPTIVE STATISTICS  (central tendency, spread, shape)
+======================================================================
+                      count       mean         std       min       5%       25%        50%       75%         90%       95%         99%          max        IQR   skew  kurtosis
+comment_count      196633.0    7.32642   10.485508       1.0      1.0       3.0        5.0       8.0        14.0      21.0        52.0        429.0        5.0   7.04     90.86
+resolution_days    153748.0  82.751552  176.451459  0.000012  0.03566  1.732804  12.192153  57.51445  272.971321  462.5178  872.555467  1380.008009  55.781646   3.31     12.45
+summary_len_chars  196633.0  79.691857   44.640024       1.0     28.0      50.0       70.0      96.0       134.0     173.0       249.0        255.0       46.0    1.6      3.21
+summary_len_words  196633.0   9.686767    4.873463       1.0      4.0       6.0        9.0      12.0        16.0      19.0        26.0         57.0        6.0   1.35      3.19
+n_blocks           196633.0   0.495456    2.998862       0.0      0.0       0.0        0.0       1.0         1.0       2.0         3.0        299.0        1.0  51.75   3608.47
+n_depends_on       196633.0   0.440491    3.963462       0.0      0.0       0.0        0.0       0.0         1.0       1.0         4.0        435.0        0.0   50.0   3645.86
+n_cc               196633.0   2.180244    3.030617       0.0      0.0       0.0        1.0       3.0         5.0       7.0        13.0        177.0        3.0   6.79    166.85
+n_keywords         196633.0   1.169549    0.487143       1.0      1.0       1.0        1.0       1.0         2.0       2.0         3.0          9.0        0.0   3.53     15.35
+votes              196633.0    0.05259    0.468283       0.0      0.0       0.0        0.0       0.0         0.0       0.0         1.0         66.0        0.0  44.97   3944.27
+
+Outlier counts by the 1.5 x IQR rule (Tukey):
+  comment_count        Q1=     3.00  Q3=     8.00  IQR=     5.00  upper fence=    15.50  outliers=17,183 (8.74%)
+  resolution_days      Q1=     1.73  Q3=    57.51  IQR=    55.78  upper fence=   141.19  outliers=25,084 (16.32%)
+  summary_len_chars    Q1=    50.00  Q3=    96.00  IQR=    46.00  upper fence=   165.00  outliers=11,196 (5.69%)
+  summary_len_words    Q1=     6.00  Q3=    12.00  IQR=     6.00  upper fence=    21.00  outliers=5,303 (2.70%)
+  n_blocks             Q1=     0.00  Q3=     1.00  IQR=     1.00  upper fence=     2.50  outliers=4,457 (2.27%)
+  n_depends_on         Q1=     0.00  Q3=     0.00  IQR=     0.00  upper fence=     0.00  outliers=39,754 (20.22%)
+  n_cc                 Q1=     0.00  Q3=     3.00  IQR=     3.00  upper fence=     7.50  outliers=9,042 (4.60%)
+  n_keywords           Q1=     1.00  Q3=     1.00  IQR=     0.00  upper fence=     1.00  outliers=25,862 (13.15%)
+  votes                Q1=     0.00  Q3=     0.00  IQR=     0.00  upper fence=     0.00  outliers=7,009 (3.56%)
+
+FIG 1  comment_count:
+  n=196,633  mean=7.33  median=5  mode=4  std=10.49
+  min=1  Q1=3  Q3=8  P90=14  P99=52  max=429
+  skewness=7.04   (>0 => right-tailed)
+
+FIG 2  excluded 490 of 58,003 resolved bugs (0.84%) with resolution time < 0.01 days (~15 min) as automated closures.
+
+FIG 2  resolution_days by severity (five-number summary):
+            count   min    25%    50%     75%      max    mean     IQR
+severity                                                              
+S1          428.0  0.01   0.11   1.21    6.88  1051.25   24.28    6.77
+S2         4876.0  0.01   3.53  13.54   55.87  1323.23   65.12   52.35
+S3        19056.0  0.01   5.92  25.28  143.96  1365.09  127.67  138.04
+S4        33153.0  0.01  23.72  39.25  231.26  1380.01  164.11  207.54
+  Kruskal-Wallis H=2765.7, p=0.000e+00  (tests whether medians differ across the four groups)
+
+FIG 3  Spearman correlation matrix:
+                   comment_count  resolution_days  summary_len_words  n_blocks  n_depends_on   n_cc  n_keywords  votes
+comment_count              1.000            0.365              0.081     0.122         0.094  0.400       0.214  0.034
+resolution_days            0.365            1.000              0.078     0.069         0.126  0.150       0.212  0.058
+summary_len_words          0.081            0.078              1.000    -0.043         0.031  0.064      -0.073  0.004
+n_blocks                   0.122            0.069             -0.043     1.000         0.085  0.197      -0.113  0.111
+n_depends_on               0.094            0.126              0.031     0.085         1.000 -0.065      -0.042  0.041
+n_cc                       0.400            0.150              0.064     0.197        -0.065  1.000       0.050  0.187
+n_keywords                 0.214            0.212             -0.073    -0.113        -0.042  0.050       1.000 -0.030
+votes                      0.034            0.058              0.004     0.111         0.041  0.187      -0.030  1.000
+
+  Strongest pairs (|rho|, excluding self-correlation):
+    n_cc               ~ comment_count      rho = +0.400
+    resolution_days    ~ comment_count      rho = +0.365
+    n_keywords         ~ comment_count      rho = +0.214
+    n_keywords         ~ resolution_days    rho = +0.212
+    n_cc               ~ n_blocks           rho = +0.197
+    votes              ~ n_cc               rho = +0.187
+
+FIG 4  comments vs resolution time:
+  n plotted=12,000  Spearman rho=0.3255  p=4.256e-294
+  log-log least squares: slope=0.9209  intercept=0.7108  r=0.3581  r^2=0.1282
+
+FIG 5  summary length (words):
+  n=196,633  mean=9.69  median=9  std=4.87  skew=1.35  kurtosis=3.19
+  P5=4  Q1=6  Q3=12  P90=16  P99=26  max=57
+  Shapiro-Wilk normality test on n=4000 sample: W=0.9057, p=2.305e-44
+
+FIG 6  severity composition (all rows):
+             count  percent
+severity                   
+-- (unset)  101739    51.98
+S4           40202    20.54
+S3           33556    17.14
+(missing)    14164     7.24
+S2            5615     2.87
+S1             469     0.24
+
+       class balance among S1-S4 only:
+          count  percent
+severity                
+S1          469     0.59
+S2         5615     7.03
+S3        33556    42.03
+S4        40202    50.35
+  imbalance ratio (largest/smallest) = 85.7 : 1
+
+======================================================================
+ADDITIONAL CONTEXT
+======================================================================
+date range          : 2021-01-27 15:34:41+00:00  ->  2024-11-15 10:39:59+00:00
+unique products     : 85
+unique components   : 725
+bugs with dupe_of   : 18,796
+bugs with crash sig : 6,014
+
+resolution:
+resolution
+FIXED         83554
+NaN           45449
+INCOMPLETE    22364
+DUPLICATE     18796
+INVALID       14384
+WORKSFORME     7268
+WONTFIX        3923
+MOVED           556
+INACTIVE        339
+
+top 10 components:
+component
+General                        21866
+DOM: Core & HTML                7623
+web-platform-tests              6509
+Untriaged                       4096
+CSS Parsing and Computation     3937
+Layout                          3760
+JavaScript Engine               3672
+Graphics: WebRender             3020
+Widget: Gtk                     2954
+Audio/Video: Playback           2919
